@@ -1,3 +1,14 @@
 spring:
   application:
     name: spring_sem06_hw_task02
+  jpa:
+    hibernate:
+      jdbc:
+        lob:
+          non_contextual_creation: true
+      ddl-auto: update
+    show-sql: true
+url:
+  CHARACTER_API: "https://rickandmortyapi.com/api/character"
+  LOCATION_API: "https://rickandmortyapi.com/api/location"
+  EPISODE_API: "https://rickandmortyapi.com/api/episode"
