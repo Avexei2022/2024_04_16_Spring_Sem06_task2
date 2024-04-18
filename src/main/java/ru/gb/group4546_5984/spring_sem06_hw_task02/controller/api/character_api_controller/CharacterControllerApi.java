@@ -26,8 +26,8 @@ public class CharacterControllerApi {
     private final RickAndMortyApiConfig rickAndMortyApiConfig;
 
     /**
-     * Принудительная пересылка со страницы /api на загрузку первой страницы с рессурса
-     * @return
+     * Принудительная пересылка со страницы /api на загрузку первой страницы героев с рессурса
+     * @return страница героев №1 с рессура Rick and Morty
      */
     @GetMapping("/")
     public String redirectToFirstPage() {
@@ -35,9 +35,9 @@ public class CharacterControllerApi {
     }
 
     /**
-     *
-     * @param page
-     * @return
+     *Метод подготовки информации о героях с загрузкой соответсвующе страницы с рессурса Rick and Morty
+     * @param page номер страницы из списка героев
+     * @return Список героев и статус ответа
      */
     @GetMapping("/characters/page/{page}")
     public ResponseEntity<Characters> getCharacters(@PathVariable("page") String page) {

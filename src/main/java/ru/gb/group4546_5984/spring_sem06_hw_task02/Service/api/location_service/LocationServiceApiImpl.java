@@ -18,6 +18,10 @@ public class LocationServiceApiImpl implements LocationServiceApi {
     private final HttpHeaders headers;
     private final RickAndMortyApiConfig rickAndMortyApiConfig;
 
+    /**
+     * Получить список всех локаций с рессурса Rick and Morty
+     * @return
+     */
     @Override
     public Location getAllLocations() {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));

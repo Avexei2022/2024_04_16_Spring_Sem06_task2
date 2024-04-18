@@ -5,6 +5,9 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Карточка локации в соответствии с документацией Rick and Morty
+ */
 @Data
 public class LocationResult {
     private Integer id;

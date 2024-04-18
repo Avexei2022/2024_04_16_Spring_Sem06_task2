@@ -10,6 +10,10 @@ import ru.gb.group4546_5984.spring_sem06_hw_task02.domain.episodes.Episode;
 
 import java.util.List;
 
+
+/**
+ * Сервис эпизодов
+ */
 @Service
 @RequiredArgsConstructor
 @Log
@@ -18,6 +22,10 @@ public class EpisodeServiceApiImpl implements EpisodeServiceApi {
     private final HttpHeaders headers;
     private final RickAndMortyApiConfig rickAndMortyApiConfig;
 
+    /**
+     * Получить список эпизодов
+     * @return эпизоды
+     */
     @Override
     public Episode getAllEpisodes() {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));

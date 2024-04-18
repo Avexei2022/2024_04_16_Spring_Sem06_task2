@@ -1,7 +1,6 @@
 package ru.gb.group4546_5984.spring_sem06_hw_task02.domain.characters;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -10,6 +9,10 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * Карточка героя в соответствии с документацией Rick and Morty
+ * Добавлены аннотации для базы данных
+ */
 @Entity
 @Data
 @Table(name = "characters")

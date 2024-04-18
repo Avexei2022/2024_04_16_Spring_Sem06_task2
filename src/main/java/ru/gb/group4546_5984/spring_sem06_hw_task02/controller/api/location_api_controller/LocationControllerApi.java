@@ -9,13 +9,21 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.gb.group4546_5984.spring_sem06_hw_task02.Service.api.location_service.LocationServiceApi;
 import ru.gb.group4546_5984.spring_sem06_hw_task02.domain.locations.Location;
 
-//Проверка свагером http://localhost:8080/swagger-ui/index.html
+/**
+ * Рест контроллер местоположений героев
+ * Проверка свагером http://localhost:8080/swagger-ui/index.html
+ */
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class LocationControllerApi {
     private final LocationServiceApi service;
 
+    /**
+     * Метод запроса у сервиса списка всех местоположений героев
+     * @return Список местоположений героев и статус ответа
+     */
     @GetMapping("/locations")
     public ResponseEntity<Location> getLocations() {
         Location allLocations = service.getAllLocations();

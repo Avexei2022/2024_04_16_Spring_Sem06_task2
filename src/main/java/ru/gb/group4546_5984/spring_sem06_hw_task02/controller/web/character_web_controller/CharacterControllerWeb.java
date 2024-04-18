@@ -2,8 +2,7 @@ package ru.gb.group4546_5984.spring_sem06_hw_task02.controller.web.character_web
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +16,9 @@ import ru.gb.group4546_5984.spring_sem06_hw_task02.domain.characters.Characters;
 
 import java.util.List;
 
+/**
+ * Веб контроллер героев
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/")
@@ -25,12 +27,33 @@ public class CharacterControllerWeb {
     private final CharacterServiceApi serviceApi;
     private final RickAndMortyApiConfig rickAndMortyApiConfig;
 
-
+    /**
+     * Метод принудительного перенаправления к методу подготовки страниц
+     * @return ссылка на первую страницу героев
+     */
     @GetMapping("/")
     public String redirectToFirstPage() {
         return "redirect:/characters/page/1";
     }
-    
+
+    /**
+     * Основной метод подготовки вебстраницы
+     * @param page номер страницы в списке героев с рессурса Rick and Morty
+     * @param model Модель веб страницы
+     * @return готовая страница index.html
+     * Шаги:
+     * - подготовка ссылки на соответствующую страницу героев в соответствии с документацией Rick and Morty
+     * - Получение с рессурса Rick and Morty объединенной информации о странице со списком героев
+     * - Изъятие информационной части
+     * - Изъятие списка героев
+     * - получение списка героев из базы данных (корзины)
+     * - подгрузка в модель:
+     *      - информация о странице;
+     *      - список героев;
+     *      - номер текущей страниы;
+     *      - количество карточек героев в корзине;
+     *      - список карточек героев из корзины
+     */
     @GetMapping("/characters/page/{page}")
     public String getCharacters(@PathVariable("page") String page, Model model) {
         String url = rickAndMortyApiConfig.getCHARACTER_API() + "/?page=" + page;
@@ -46,6 +69,16 @@ public class CharacterControllerWeb {
         return "index";
     }
 
+    /**
+     * Метод добавления карточки героя в корзину
+     * @param id номер героя
+     * @param page номер текущей страницы для возврата к ней
+     * @return возврат ссылки на соответствующую страницу
+     * Шаги:
+     *      - подготовка ссылки на страницу героя по его id в соответствии с документацией Rick and Morty
+     *      - передача сервису подготовленной ссылки для загрузки карточки героя и сохранения её в базе данных
+     *      - возврат к странице, с которой карточка героя была добавлена в корзину
+     */
     @GetMapping("/characters/add_to_basket/{id}/{page}")
     public String addToBasket(@PathVariable("id") Integer id, @PathVariable("page") String page) {
         String url = rickAndMortyApiConfig.getCHARACTER_API() + "/" + id;
@@ -53,13 +86,29 @@ public class CharacterControllerWeb {
         return "redirect:/characters/page/" + page;
     }
 
+    /**
+     * Метод удаления карточки героя из базы данных
+     * @param id id героя
+     * @param page номер страницы на которой пользователь производил действия удаления
+     * @return возврат к этой же странице
+     * Шаги:
+     *      - передача сервису id героя для удаления его карточки из базы данных
+     *      - возврат к страние
+     */
     @GetMapping("/characters/delete_from_basket/{id}/{page}")
     public String deleteFromBasket(@PathVariable("id") Integer id, @PathVariable("page") String page) {
         serviceApi.deleteById(id);
         return "redirect:/characters/page/" + page;
     }
 
-
+    /**
+     * Метод модификации информационной части о странице героев перед её добавлением в модель
+     * @param allCharacters Информация полученная с рессурса Rick and Morty
+     * @return Модифицированная информационная часть о странице
+     * Пояснение: В информационной части прриходят ссылки на предыдущую и следующую странцы,
+     * но для загрузки в модель ссылки не нужны, но нужны номера страниц. Поэтому ссылки меняются на номера страниц.
+     * Если со ссылкой проблема, то она меняется на страницу 1.
+     */
     private CharacterInfo getCharacterInfo(Characters allCharacters) {
         CharacterInfo characterInfo = allCharacters.getInfo();
         if (characterInfo.getPrev() == null
